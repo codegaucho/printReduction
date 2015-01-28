@@ -1,0 +1,124 @@
+﻿@model PrintReduction.Data.Template
+
+@{
+    ViewBag.Title = "Forum Topic";
+}
+
+<!-- display is a stripped down version of the Details view -->
+
+<div>
+    @Html.Raw(Model.Body)
+</div>
+
+<div>
+    <!-- comment period is over, so we hid the button -->
+    <div class="alert alert-dismissable alert-warning">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>The Paperless r2 Idea Forum is now closed.</strong>  
+        <p>You can review submitted ideas below.</p>
+    </div>
+    <a class="btn btn-primary hide" data-toggle="collapse" href="#collapseProblem2">
+        <span class="glyphicon glyphicon-bullhorn"></span> I have an Idea
+    </a>
+
+    <div id="collapseProblem2" class="panel panel-primary panel-collapse collapse">
+        <div class="panel-heading">
+            <h3 class="panel-title">Tell us your suggestion:</h3>
+        </div>
+        <div class="panel-body">
+            <!--  action was "../../Forum/Create"-->
+            <form class="form-horizontal" action="@Request.ApplicationPath/Forum/Create" method="post">
+                <div class="formgroup hide">
+                    <input type="text" id="Key" name="Key" value="@Html.DisplayFor(model => model.Key)" />
+                    <input type="text" id="TemplateID" name="TemplateID" value="@Html.DisplayFor(model => model.Id)" />
+                </div>
+                <div class="formgroup">
+
+                    <div>
+                        <input type="text" name="Title" style="width: 100%; max-width: 100%;" class="form-control input-md" placeholder="Enter title for your post" />
+                    </div>
+                    <div>
+                        <span class="field-validation-valid" data-valmsg-for="Title" data-valmsg-replace="true"></span>
+                    </div>
+
+                    <div>
+                        <textarea name="Body" style="width: 100%; max-width: 100%;" rows="4" class="form-control input-md" placeholder="Enter your comments"></textarea>
+                    </div>
+                    <div>
+                        <span class="field-validation-valid" data-valmsg-for="Body" data-valmsg-replace="true"></span>
+                    </div>
+
+                    <div>
+                        <button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-floppy-save"></span> Submit</button>
+                        <a class="btn btn-danger" data-toggle="collapse" href="#collapseProblem2">
+                            <span class="glyphicon glyphicon-remove"></span> 
+                            &nbsp;Cancel
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<div class="container">
+<div class="row">
+    <h3>Ideas</h3>
+    <div id="forumResultsDiv"></div>
+</div> <!-- row -->
+</div> <!-- container -->
+
+
+
+<!-- Button trigger modal hidden - we are putting in the real buttons via js -->
+<button class="btn btn-primary btn-sm hide" data-toggle="modal" data-target="#addCommentModal">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="addCommentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <!-- the form action is changed dynamically to add the id -->
+        <form name="CommentForm" class="modal-content" action="../../Forum/AddComment" method="post">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">Comment</h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <textarea name="Body" style="width: 100%; max-width: 100%;" rows="4" class="form-control input-md" placeholder="Enter your comments"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Add Comment</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Breadcrumbs {
+    <ul class="breadcrumb">
+        <li>
+            @Html.ActionLink("Home", "Index", "Home")
+        </li>
+        <li><!--  should have index of all forum's -->Forum</li>
+        <li class="active">@Html.DisplayFor(model => model.Subject)</li>
+    </ul>
+}
+
+@section Scripts { 
+    <script type="text/javascript">
+        require(["printReduction/templateControllerClass", "dojo/domReady!"], function (templateController) {
+            var template = new templateController();
+
+            var viewBagIsAdmin = "@ViewBag.isAdmin";
+            var isAdmin = (viewBagIsAdmin == "True");
+
+            template.forumTopic("@Html.DisplayFor(model => model.Key)", "forumResultsDiv", isAdmin);
+        });
+
+    </script>
+}

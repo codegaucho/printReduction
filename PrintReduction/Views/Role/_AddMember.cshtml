@@ -1,0 +1,46 @@
+﻿<!-- Modal for adding user -->
+<!-- use of this modal requires the id be passed as part of ViewBag -->
+
+<button class="btn btn-primary" data-toggle="modal" data-target="#addMemberModal">
+    <span class="glyphicon glyphicon-user"></span>
+    Add Member...
+</button>
+
+<div class="modal fade" id="addMemberModal" tabindex="-1" role="dialog" aria-labelledby="addMemberModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="addMemberModalLabel">Add Member</h4>
+            </div>
+            <form class="form-horizontal" action="~/Role/AddMember/@ViewBag.id" method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label" for="New_Member">Add New Member</label>
+                        <div class="col-lg-10">
+                            <input name="New_Member" id="New_Member" class="form-control employee-typeahead" />
+                            <span class="field-validation-valid" data-valmsg-replace="true" data-valmsg-for="New_Member"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="addMemberModalErrors"></div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        <span class="glyphicon glyphicon-remove"></span>
+                        Cancel
+                    </button>
+
+                    <button type="submit" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        Add Member
+                    </button>
+                </div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

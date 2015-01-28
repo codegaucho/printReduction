@@ -1,0 +1,100 @@
+﻿@model PrintReduction.Data.Role
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Role</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Members)
+        </dt>
+
+        @if (Model.Members != null)
+        {
+            foreach( var item in Model.Members) 
+            {
+                <dd>
+                    @Html.DisplayFor(model => item)
+                </dd>
+            }
+        }
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Body)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Body)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @if (ViewBag.isAdmin)
+    {
+        <!-- wanted to use  at H tml.ActionLink("Edit", "Edit", new { id = Model.Id }, new { at class = "btn btn-primary" }) -->
+        <!-- but couldn't work out how to add the span with the glyphicon -->
+        <a href="@Url.Action("Edit", "Role", new { id = Model.Id })" class="btn btn-primary">
+            <span class="glyphicon glyphicon-pencil"></span> 
+            Edit
+        </a>
+        
+        Html.RenderPartial("~/Views/Role/_AddMember.cshtml");
+        Html.RenderPartial("~/Views/Role/_RemoveMember.cshtml");
+        Html.RenderPartial("~/Views/Shared/_LogHistory.cshtml");
+        Html.RenderPartial("~/Views/Shared/_Delete.cshtml");
+    }
+</p>
+
+@section Breadcrumbs {
+    <ul class="breadcrumb">
+        <li>
+            @Html.ActionLink("Home", "Index", "Home")
+        </li>
+        <li>
+            @Html.ActionLink("Roles", "Index", "Role")
+        </li>
+        <li class="active">@Html.DisplayFor(model => model.Title)</li>
+    </ul>
+} 
+
+@section Scripts { 
+    <script type="text/javascript">
+        require(["r2/Controllers/roleControllerClass", "dojo/domReady!"], function (RoleController) {
+            var roleController = new RoleController();
+
+            var viewBagIsAdmin = "@ViewBag.isAdmin";
+            var isAdmin = (viewBagIsAdmin == "True");
+
+            //we need to initialize the stuff needed for adding members
+            roleController.read(isAdmin);
+
+            //hook up log history button
+            if (isAdmin) {
+                var log = null;
+                $('#logHistoryModal').on('show.bs.modal', function (e) {
+                    if (log == null) {
+                        //the log grid/table has not yet been loaded into the modal
+                        require(["r2/logControllerClass"], function (logController) {
+                            log = new logController();
+                            log.logGrid_init("Role", "@Html.DisplayFor(model => model.Id)", "logGrid", "table");
+                        });
+                    }
+                })
+            }
+        });
+    </script>
+}

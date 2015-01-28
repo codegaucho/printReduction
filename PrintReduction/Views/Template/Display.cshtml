@@ -1,0 +1,13 @@
+﻿@model PrintReduction.Data.Template
+
+@{
+    ViewBag.Title = @Html.DisplayFor(model => model.Subject);
+}
+
+<!-- display is a stripped down version of the Details view -->
+
+<h2>@Html.DisplayFor(model => model.Subject)</h2>
+
+<div>
+    @Html.Raw(Model.Body)
+</div>

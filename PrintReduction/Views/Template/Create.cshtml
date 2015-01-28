@@ -1,0 +1,20 @@
+﻿
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@RenderPage("~/Views/Template/_CreateEdit.cshtml") 
+
+@section Scripts { 
+    <script type="text/javascript">
+        require(["printReduction/templateControllerClass", "dojo/domReady!"], function (templateController) {
+            var template = new templateController();
+
+            template.create();
+        });
+        
+    </script>
+}

@@ -1,0 +1,75 @@
+﻿@model PrintReduction.Data.Template
+
+@{
+    ViewBag.Title = "Caption Contest";
+}
+
+<h1>Caption Contest</h1>
+
+<!-- display is a stripped down version of the Details view -->
+
+<h2>@Html.DisplayFor(model => model.Subject)</h2>
+
+<div>
+    @Html.Raw(Model.Body)
+</div>
+<!-- hid form as caption contest is over, and show alert -->
+<div class="container hide">
+<form class="form-horizontal" action="../../Caption/Create" method="post">
+    <div class="formgroup hide">
+            <input type="text" id="Key" name="Key" value="@Html.DisplayFor(model => model.Key)" />
+            <input type="text" id="TemplateID" name="TemplateID" value="@Html.DisplayFor(model => model.Id)" />
+    </div>
+    <div class="formgroup">
+        
+        <div class="col-lg-10">
+            <input type="text" id="Title" name="Title" style="width: 100%; max-width: 100%;" class="form-control input-lg" placeholder="Enter caption for this image here (keep it clean)" />
+        </div>
+        <div class="col-lg-2">
+            <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-floppy-save"></span> Submit</button>
+        </div>
+    </div>
+</form>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="alert alert-dismissable alert-warning">
+            <button class="close" data-dismiss="alert" type="button">×</button>
+            <h4>Caption Contest Over!</h4>
+            <p>
+                Sadly, the caption contest has no ended - though you may quietly think of captions in your head.
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+<div class="row">
+    <h3>Captions already submitted</h3>
+    <div id="captionResultsDiv"></div>
+</div> <!-- row -->
+</div> <!-- container -->
+
+@section Breadcrumbs {
+    <ul class="breadcrumb">
+        <li>
+            @Html.ActionLink("Home", "Index", "Home")
+        </li>
+        <li class="active">Caption Contest</li>
+    </ul>
+}
+
+@section Scripts { 
+    <script type="text/javascript">
+        require(["printReduction/templateControllerClass", "dojo/domReady!"], function (templateController) {
+            var template = new templateController();
+
+            var viewBagIsAdmin = "@ViewBag.isAdmin";
+            var isAdmin = (viewBagIsAdmin == "True");
+
+            template.captionContest("@Html.DisplayFor(model => model.Key)", isAdmin);
+        });
+
+    </script>
+}

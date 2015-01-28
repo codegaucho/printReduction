@@ -1,0 +1,248 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Print Reduction</title>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/dojo/1.10.0/dijit/themes/claro/claro.css" />
+
+    @RenderSection("head", required: false)
+
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+</head>
+<body class="claro">
+    <!-- navigator start -->
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Print Reduction", "Index", "Home", null, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav" id="navlist">
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="surveyNav">
+                            Pledges
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="surveyNav" id="surveyNav_ul">
+                            <li>
+                                @Html.ActionLink("My Pledge", "MySurvey", "Survey")
+                            </li>
+                            <li>
+                                @Html.ActionLink("Shared Pledges", "Index", "Survey")
+                            </li>
+                            <li>
+                                @Html.ActionLink("Text From Pledge", "Display", "Template", new { id = "text_from_pledge" }, null)
+                             </li>
+                            <li>@Html.ActionLink("Dale and Pal", "CaptionContest", "Template", new { id = "CaptionContest_1" }, null)</li>
+                            </li>
+
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="myPrintingNav">
+                            <span class="glyphicon glyphicon-stats"></span>
+                            Metrics 
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="myPrintingNav" id="myPrintingNav_ul">
+                            <li>
+                                <a href="~/Home/Graph/MeVsRegion">How do I compare?</a>
+                            </li>
+
+                            <li class="hide">
+                                <a href="~/Home/Graph/Location_Total">Location Totals</a>
+                            </li>
+
+                            <li class="hide">
+                                <a href="~/Home/Graph/Location_Average">Location Average</a>
+                            </li>
+
+                            <li class="hide">
+                                <a href="~/Home/Graph/Division_Total">Division Totals</a>
+                            </li>
+
+                            <li class="hide">
+                                <a href="~/Home/Graph/Division_Average">Division Average</a>
+                            </li>
+
+                            <li class="hide">
+                                <a href="~/Home/Graph/Climate_Change_Impact_Division_Total">Climate Change - Division Totals</a>
+                            </li>
+
+                            <li class="hide">
+                                <a href="~/Home/Graph/Climate_Change_Impact_Division_Average">Climate Change - Division Average</a>
+                            </li>
+
+                            <li>
+                                <a href="~/Home/DualGraph/Division">Division Graphs</a>
+                            </li>
+
+                            <li>
+                                <a href="~/Home/DualGraph/Location">Location Graphs</a>
+                            </li>
+
+                            
+                            <li>
+                                <a href="~/Home/DualGraph/WhoIsTakingThePledge">Who is taking the pledge</a>
+                            </li>
+
+                            <li>
+                                <a href="~/Home/DualGraph/CO2_Division">
+                                    <span class="glyphicon glyphicon-globe"></span>
+                                    Climate Change - Division
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="~/Home/DualGraph/HowMuchAreWePledging">How much are we pledging</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right" id="navbar_right">
+                    <li>
+                        <a href="~/Template/Forum/PaperlessR2">PaperlessR2</a>
+                    </li>
+
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="userNameNav">Hello, <span class="username">@User.Identity.Name</span>! <span class="caret"></span></a>
+                        <ul class="dropdown-menu" aria-labelledby="userNameNav" id="hello_ul">
+                            <li>@Html.ActionLink("About", "Display", "Template", new { id = "About" }, null)</li>
+                            <li>@Html.ActionLink("Contact", "Display", "Template", new { id = "Contact" }, null)</li>
+                            <li>@Html.ActionLink("FAQ", "Display", "Template", new { id = "FAQ" }, null)</li>
+
+                            <li class="divider"></li>
+                            <li class="dropdown-header">Caption Contest</li>
+                            <li>@Html.ActionLink("Dale and Pal", "CaptionContest", "Template", new { id = "CaptionContest_1" }, null)</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- navigator end -->
+
+    @RenderSection("breadcrumbs", required: false)
+
+    <div class="container body-content">
+        <div id="flash-placeholder"></div>
+
+        @RenderBody()
+        <hr />
+        <footer id="page-footer">
+            <p id="page-footer-copy">&copy; @DateTime.Now.Year - U.S. Environmental Protection Agency, Region 2</p>
+        </footer>
+    </div>
+
+    <!-- scripts at bottom  -->
+    <script type="text/javascript">
+        //dojoConfig must be in place before dojo is loaded
+        //use.js allows us to require non AMD packages as if they were AMD
+        //paths and use are for non-amd packages
+        //packages are for AMD packages
+        //aliases are for amd single files
+        //for applicationPath to work both local and on server, we need to make some adjustments
+
+        var appPath = "@Request.ApplicationPath";
+        if (appPath.slice(-1) != "/") {
+            appPath += "/";
+        }
+
+        //note the subtle difference between dojoConfi.app.path and dojoConfig.request.applicationPath
+        var dojoConfig = {
+            async: true,
+            parseOnLoad: false,
+            app: {
+                    userName: '@User.Identity.Name.Replace("AA\\", "")',
+                    path: appPath
+                },
+                request: {
+                    applicationPath: "@Request.ApplicationPath",
+                    path: "@Request.Path",
+                    queryString: "@Request.QueryString"
+                },
+                packages: [
+                    //amd packages
+                    { name: "r2", location: "//x0202tnythnetdv.aa.ad.epa.gov/common/r2commonscripts" },
+                    { name: "printReduction", location: appPath + "Scripts/app" },
+                    { name: "test", location: appPath + "Scripts/test" },
+                    { name: "lodash", location: "//x0202tnythnetdv.aa.ad.epa.gov/common/js/lodash-amd" },
+                    //{ name: "dojoBootstrap", location: "//x0202tnythnetdv.aa.ad.epa.gov/common/js/dojo-bootstrap" },
+                    { name: "dgrid", location: "//x0202tnythnetdv.aa.ad.epa.gov/common/js/dgrid" },
+                    { name: "xstyle", location: "//x0202tnythnetdv.aa.ad.epa.gov/common/js/xstyle" },
+                    { name: "put-selector", location: "//x0202tnythnetdv.aa.ad.epa.gov/common/js/put-selector" }
+                ],
+                paths: {
+                    "use": "//cdnjs.cloudflare.com/ajax/libs/use.js/0.2.0/use.min",
+                    "typeahead": "//cdn.jsdelivr.net/typeahead.js/0.10.1/typeahead.bundle.min",
+                    "signature_pad": "//cdnjs.cloudflare.com/ajax/libs/signature_pad/1.3.2/signature_pad.min",
+                    "tinymce": "//tinymce.cachefly.net/4.0/tinymce.min"
+                },
+                aliases: [
+                    ["hogan", "//cdnjs.cloudflare.com/ajax/libs/hogan.js/3.0.0/hogan.min.amd.js"],
+                    ["stacktrace", "//rawgithub.com/stacktracejs/stacktrace.js/master/stacktrace.js"]
+                ],
+                use: {
+                    "typeahead": { attach: "Typeahead" },
+                    "signature_pad": { attach: "SignaturePad" },
+                    "tinymce": {attach: "tinymce"}
+                }
+            };
+    </script>
+
+    <script src="//ajax.googleapis.com/ajax/libs/dojo/1.10.0/dojo/dojo.js"></script>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
+    <!-- for the placeholders in IE9 -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-placeholder/2.0.8/jquery.placeholder.min.js"></script>
+
+<script type="text/javascript">
+        //from lodash test2
+        function startsWith(string, target, position) {
+            string = string == null ? '' : String(string);
+            position = typeof position == 'undefined' ? 0 : nativeMin(position < 0 ? 0 : (+position || 0), string.length);
+            return string.lastIndexOf(target, position) == position;
+        }
+
+        //using html5 webstorage's sessionStorage Object to determine we need to show the warning banner
+        if (! sessionStorage.warningBanner) {
+            //we need to show the banner
+            //this should be written as a widget and only loaded when needed.
+            //alert("show banner");
+            //if they accept the warning, set sessionStorage.warningBanner to true so they don't see it again this session.
+            //sessionStorage.warningBanner = true;
+        }
+
+        //define a single global for the application
+        var app = {};
+        require(["printReduction/applicationControllerClass", "dojo/domReady!"], function (appController) {
+            var viewBagIsAdmin = "@ViewBag.isAdmin";
+            var isAdmin = (viewBagIsAdmin == "True");
+
+            app = new appController(isAdmin);
+
+            app.username = dojoConfig.app.userName;
+
+            //finally, apply placeholders for IE9 - requires scriptlibrary above
+            $('input, textarea').placeholder();
+
+        });
+
+    </script>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

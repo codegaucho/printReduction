@@ -1,0 +1,121 @@
+﻿@model PrintReduction.Data.Template
+
+@{
+    ViewBag.Title = "Graph";
+}
+
+<h2>@Html.DisplayFor(model => model.Subject)</h2>
+
+<div id="reportTotalsChartDiv" style='display:block; clear:none; z-index:999; width:100%; height:499px;'>
+    <img src="https://manage.liquidweb.com/img/icons/loading-large.gif" />
+</div>
+<div id='reportTotalsLegendDiv'></div>
+
+<div>
+            @Html.Raw(Model.Body)
+</div>
+
+@section Scripts { 
+    <script type="text/javascript">
+        //Right equivalent
+        function strRight(sourceStr, keyStr) {
+            idx = sourceStr.indexOf(keyStr);
+            return (idx == -1 | keyStr == '') ? '' : sourceStr.substr(idx + keyStr.length);
+        }
+
+        //RightBack equivalent
+        function rightBack(sourceStr, keyStr) {
+            arr = sourceStr.split(keyStr);
+            return (sourceStr.indexOf(keyStr) == -1 | keyStr == '') ? '' : arr.pop()
+        }
+
+        //Left equivalent
+        function strLeft(sourceStr, keyStr) {
+            return (sourceStr.indexOf(keyStr) == -1 | keyStr == '') ? '' : sourceStr.split(keyStr)[0];
+        }
+
+        require(["printReduction/graphingControllerClass", "dojo/domReady!"], function (graphController) {
+
+            var username = "@User.Identity.Name";
+            if (startsWith(username, "AA")) {
+                username = username.slice(2);
+            }
+
+            graphing = new graphController();
+            //graphing.addGraphingNavigator();
+
+            //Graphs - going to get specific graph from url
+            //MeVsRegion
+            //Location_Total
+            //Location_Average
+            //Division_Total
+            //Division_Average
+            var locationKeys = ["NY", "NJ", "PR"];
+            var baseurl = "http://r2webapps.r02.epa.gov/gov/epa/r2/papercut/";
+            var divisionKeys = ["ORA", "OPM", "ORC", "DECA", "CASD", "CWD", "ERRD", "DESA", "PAD", "CEPD", "NONR2"];
+            var title;
+            switch (rightBack(location.pathname, "Graph/")) {
+                case "MeVsRegion" :
+                    graphing.userVsRegional_bar(username, "reportTotalsChartDiv");
+                    break;
+                case "Location_Total":
+                    title = "Total pages printed in past year - by location";
+                    graphing.keys_bar("reportTotalsChartDiv", locationKeys, baseurl + "papercut_location_stats_jsonp.cfm?location=", false, title);
+                    break;
+                case "Location_Average":
+                    title = "Printed pages per user per month - by location";
+                    graphing.keys_bar("reportTotalsChartDiv", locationKeys, baseurl + "papercut_location_stats_jsonp.cfm?location=", true, title);
+                    break;
+                case "Division_Total":
+                    title = "Total pages printed in past year - by division";
+                    graphing.keys_bar("reportTotalsChartDiv", divisionKeys, baseurl + "papercut_division_stats_jsonp.cfm?division=", false, title);
+                    break;
+                case "Division_Average":
+                    title = "Printed pages per user per month - by division";
+                    graphing.keys_bar("reportTotalsChartDiv", divisionKeys, baseurl + "papercut_division_stats_jsonp.cfm?division=", true, title);
+                    break;
+                case "Climate_Change_Impact_Division_Average":
+                    title = "Per Person Climate Change Impacts by Division";
+                    graphing.climateChangeKeys_bar("reportTotalsChartDiv", divisionKeys, baseurl + "papercut_division_stats_jsonp.cfm?division=", true, title);
+                    break;
+                case "Climate_Change_Impact_Division_Total":
+                    title = "Total Climate Change Impacts by Division";
+                    graphing.climateChangeKeys_bar("reportTotalsChartDiv", divisionKeys, baseurl + "papercut_division_stats_jsonp.cfm?division=", false, title);
+                    break;
+            }
+
+            //we are going to use the last parameter of the url to work out what graph to display
+            //Graphs
+            //UserVsRegion
+            //Location_Total
+            //Location_Average
+            //Division_Total
+            //Division_Average
+
+
+            //graphing.testbar(username);
+
+            //graphing.userVsRegional_bar(username, "reportTotalsChartDiv");
+            //graphing.location_bar(username, "reportTotalsChartDiv");
+
+            //locations
+            //var keys = ["NY", "NJ", "PR"];
+            //var baseurl = "http://r2webapps.r02.epa.gov/gov/epa/r2/papercut/papercut_location_stats_jsonp.cfm?location=";
+            //graphing.keys_bar("reportTotalsChartDiv", keys, baseurl, true);
+
+            //divisions can add NONR2
+            //var keys = ["ORA", "OPM", "ORC", "DECA", "CASD", "CWD", "ERRD", "DESA", "PAD", "CEPD", "NONR2"];
+            //var baseurl = "http://r2webapps.r02.epa.gov/gov/epa/r2/papercut/papercut_division_stats_jsonp.cfm?division=";
+            //graphing.keys_bar("reportTotalsChartDiv", keys, baseurl, false);
+
+            //graphs so far
+            //1  user vs regional average
+            //2 total by location
+            //3 average by location
+            //4 total by division
+            //5 average by division
+
+        });
+        
+    </script>
+}

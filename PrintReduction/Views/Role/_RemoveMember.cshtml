@@ -1,0 +1,52 @@
+﻿<!-- Modal for removing user -->
+<!-- use of this modal requires the id be passed as part of ViewBag -->
+
+<button class="btn btn-primary" data-toggle="modal" data-target="#removeMemberModal">
+    <span class="glyphicon glyphicon-remove"></span>
+    Remove Member...
+</button>
+
+<div class="modal fade" id="removeMemberModal" tabindex="-1" role="dialog" aria-labelledby="removeMemberModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="removeMemberModalLabel">Remove Member</h4>
+            </div>
+            <form class="form-horizontal" action="~/Role/RemoveMember/@ViewBag.id" method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label" for="Old_Member">Remove Member</label>
+                        <div class="col-lg-10">
+                            <select name="Old_Member" id="Old_Member" class="form-control">
+                                @if (Model.Members != null)
+                                { 
+                                    foreach (var item in Model.Members) 
+                                    {
+                                        <option>@Html.DisplayFor(model => item)</option>
+                                    }
+                                }
+                            </select>
+                            <span class="field-validation-valid" data-valmsg-replace="true" data-valmsg-for="Old_Member"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="removeMemberModalErrors"></div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        Cancel
+                    </button>
+
+                    <button type="submit" class="btn btn-primary">
+                        Remove Member
+                    </button>
+                </div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

@@ -1,0 +1,53 @@
+﻿@model PrintReduction.Data.Survey
+
+<button class="btn btn-primary" data-toggle="modal" data-target="#sharingModal">
+    <span class="glyphicon glyphicon-share"></span>
+    Sharing Options
+</button>
+
+<!-- Modal for confirming deletions -->
+<div class="modal fade" id="sharingModal" tabindex="-1" role="dialog" aria-labelledby="sharingModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="sharingModalLabel">Sharing Options</h4>
+            </div>
+            <form id="sharingForm" class="form-horizontal" action="~/Survey/SharingOptions/@Html.DisplayFor(model => Model.Id)" method="post">
+                @Html.AntiForgeryToken()
+
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label id="shareMyNumberLabel">
+                                @Html.EditorFor(model => model.ShareNumber)
+                                Share my number   
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label id="shareMyPledgeLabel">
+                                @Html.EditorFor(model => model.SharePledge)
+                                Share my pledge          
+                            </label>
+                        </div>     
+                    </div>
+                </div>
+
+                <div class="hide">
+                    <input name="id" value="@ViewBag.id" />
+                </div>
+
+                <div id="deleteModalErrors"></div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

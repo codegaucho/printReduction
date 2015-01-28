@@ -1,0 +1,80 @@
+﻿@model PrintReduction.Data.Template
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Template</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Key)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Key)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Priority)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Priority)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Subject)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Subject)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Body)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Body)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @if (ViewBag.isAdmin)
+    {
+        <!-- wanted to use  at H tml.ActionLink("Edit", "Edit", new { id = Model.Id }, new { at class = "btn btn-primary" }) -->
+        <!-- but couldn't work out how to add the span with the glyphicon -->
+        <a href="@Url.Action("Edit", "Template", new { id = Model.Id })" class="btn btn-primary">
+            <span class="glyphicon glyphicon-pencil"></span> 
+            Edit
+        </a>
+        
+        Html.RenderPartial("~/Views/Shared/_LogHistory.cshtml");
+        Html.RenderPartial("~/Views/Shared/_Delete.cshtml");
+    }
+</p>
+
+@section Breadcrumbs {
+    <ul class="breadcrumb">
+        <li>
+            @Html.ActionLink("Home", "Index", "Home")
+        </li>
+        <li>
+            @Html.ActionLink("Templates", "Index", "Template")
+        </li>
+        <li class="active">@Html.DisplayFor(model => model.Key)</li>
+    </ul>
+}

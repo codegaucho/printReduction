@@ -1,0 +1,75 @@
+﻿@model MongoDB.Driver.Linq.MongoQueryable<PrintReduction.Data.Survey>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2> 
+
+<table class="table">
+    <tr>
+        <th>
+            EName
+        </th>
+
+        <th>
+            Date
+        </th>
+
+        <th>
+            Percentage
+        </th>
+
+        <th>
+            Share Pledge
+        </th>
+
+        <th>
+            Share Number
+        </th>
+
+        <th class="hide">
+            Monthly Pages
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.ActionLink(item.UpdatedBy, "Details", new {  id=item.Id  })
+            
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Updated)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Percentage)
+            %
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.SharePledge)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.ShareNumber)
+        </td>
+
+        <td class="hide">
+            @if (item.ShareNumber || @ViewBag.isAdmin)
+            { 
+                @Html.DisplayFor(modelItem => item.MonthlyAverage)
+            }
+            else
+            {
+                <span>NR</span> 
+            }
+
+        </td>
+
+    </tr>
+}
+
+</table>

@@ -1,0 +1,468 @@
+﻿@model PrintReduction.Data.Survey
+
+<hr />
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true)
+
+        <div class="hide">
+            lanid  
+            @Html.EditorFor(model => Model.Client.LanId)
+            eName
+            @Html.EditorFor(model => Model.Client.EName)
+            Org
+            @Html.EditorFor(model => Model.Client.Org)
+            Division
+            @Html.EditorFor(model => Model.Client.Division)
+            Email
+            @Html.EditorFor(model => Model.Client.Email)
+            Location
+            @Html.EditorFor(model => Model.Client.Location)
+            AmpBox
+            @Html.EditorFor(model => Model.Client.AmpBox)
+            MonthlyAverage
+            @Html.EditorFor(model => Model.MonthlyAverage)
+
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-6">
+                <h2>Print Reduction Pledge</h2>
+                <div class="well">
+                    <h3><span id="myNumberIsWrap">My number is <span id="myNumber"></span></span></h3>
+                    
+                    <h4>What's yours?</h4>
+                    <div class="checkbox">
+                        <label id="shareMyNumberLabel">
+                            @Html.EditorFor(model => model.ShareNumber)
+                            Share my number   
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label id="shareMyPledgeLabel">
+                            @Html.EditorFor(model => model.SharePledge)
+                            Share my pledge          
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6" id="reportTotalsChartDiv" style='height: 200px;'></div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-12" for="Percentage">
+                What percentage of your monthly average printing will you try to reduce (select one)?
+            </label>
+
+            <div class="col-md-11 col-md-offset-1">
+
+                <div class="radiobutton">
+                    <label>
+                        <input type="radio" name="Percentage" value="5" />
+                        5%
+                    </label>
+                </div>
+
+                <div class="radiobutton">
+                    <label>
+                        <input type="radio" name="Percentage" value="10" />
+                        10%
+                    </label>
+                </div>
+
+                <div class="radiobutton">
+                    <label>
+                        <input type="radio" name="Percentage" value="15" />
+                        15%
+                    </label>
+                </div>
+
+                <div class="radiobutton">
+                    <label>
+                        <input type="radio" name="Percentage" value="20"  />
+                        20%
+                    </label>
+                </div>
+
+                <div class="radiobutton">
+                    <label>
+                        <input type="radio" name="Percentage" value="25" checked />
+                        25%
+                    </label>
+                </div>
+
+                <div class="radiobutton">
+                    <label>
+                        <input type="radio" name="Percentage" value="50" />
+                        50%
+                    </label>
+                </div>
+
+                @Html.ValidationMessageFor(model => model.Percentage)
+            </div>
+        </div>
+
+        <h3>What will you Plan to Do to Meet Your Print Reduction Pledge?</h3>
+        <h4>(select applicable behaviors and individual actions that apply)</h4>
+
+        <div class="form-group">
+            <label class="col-md-12" for="PrintImpact">
+                I will Reduce My Print Impacts by: (check one or more)
+            </label>
+
+            <div class="col-md-11 col-md-offset-1">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="PrintImpact" value="Adjust Margins">
+                        Adjusting the default print margins for Microsoft applications (
+                            <a href="https://www.youtube.com/watch?v=O_byOK2xyQg" target="_blank">Word</a>, 
+                            <a href="https://www.youtube.com/watch?v=VOwbGRwNmak" target="_blank">Excel</a>
+                        )
+                    </label>
+                </div>
+
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="PrintImpact" value="Print Preview">
+                        Using Print Preview to make sure that I'm not printing blank or nearly blank pages 
+                        (
+                            <a href="https://www.youtube.com/watch?v=TGktYBQqLLc" target="_blank">Word</a>, 
+                            <a href="https://www.youtube.com/watch?v=VOwbGRwNmak" target="_blank">Excel</a>
+                        )
+                    </label>
+                </div>
+
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="PrintImpact" value="Multiple Slides">
+                        <a href="https://www.youtube.com/watch?v=Qcun6q3pWao" target="_blank">
+                            Printing multiple slides per page for PowerPoint presentations
+                        </a>
+                    </label>
+                </div>
+
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="PrintImpact" value="Electronic Filing">
+                        Transitioning to an electronic filing system for my documents (and scanning as needed)
+                    </label>
+                </div>
+
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="PrintImpact" value="Four on One">
+                        Print four pages on one piece of paper
+                    </label>
+                </div>
+
+
+                @Html.ValidationMessageFor(model => model.PrintImpact)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-12" for="ReduceEmailPrinting">
+                I will Reduce Email Printing by: (check one or more)
+            </label>
+
+            <div class="col-md-11 col-md-offset-1">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="ReduceEmailPrinting" value="EZ Mail">
+                        Using EPA's EZ Mail Records Tool
+                    </label>
+                </div>
+
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="ReduceEmailPrinting" value="PDF">
+                        Saving the email as a PDF and filing the appropriate electronic file
+                    </label>
+                </div>
+
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="ReduceEmailPrinting" value="Print Only First Page">
+                        Printing only the first page of the email (if printing is essential)
+                    </label>
+                </div>
+
+                @Html.ValidationMessageFor(model => model.ReduceEmailPrinting)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-12">
+                Outlook Calendars
+            </label>
+
+            <div class="col-md-11 col-md-offset-1">
+                <div class="checkbox">
+                        <label>
+                            @Html.EditorFor(model => model.StopPrintingOutlookCalendars)
+                            I will stop printing Outlook Calendars   
+                        </label>
+                    </div>
+
+                @Html.ValidationMessageFor(model => model.StopPrintingOutlookCalendars)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-12" for="PrintingAgendas">
+                I will Reduce My Printing Agendas by: (check one or more)
+            </label>
+
+            <div class="col-md-11 col-md-offset-1">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="PrintingAgendas" value="Bring Laptops">
+                        Telling attendees that paper agendas will not be provided at the meeting and asking them to bring their laptops
+                    </label>
+                </div>
+
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="PrintingAgendas" value="Laptop for Notes">
+                        Taking my laptop to meetings to avoid printing agendas and taking meeting notes
+                    </label>
+                </div>
+
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="PrintingAgendas" value="Projecting Agendas">
+                        Projecting agendas in the conference room for everyone to view (in rooms equipped for projection)
+                    </label>
+                </div>
+
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="PrintingAgendas" value="Single Poster">
+                        Printing a single poster-size agenda for an on-site conference
+                    </label>
+                </div>
+
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="PrintingAgendas" value="Scrap Paper">
+                        Jotting down agenda topics on scrap paper (which will be recycled anyway)
+                    </label>
+                </div>
+                @Html.ValidationMessageFor(model => model.PrintingAgendas)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-12" for="PrintingForEditing">
+                I will Reduce Printing for Editing by: (check one or more)
+            </label>
+
+            <div class="col-md-11 col-md-offset-1">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="PrintingForEditing" value="OneDrive">
+                        Using Outlook’s Sky/One Drive on EPA’s  Workplace to share and electronically edit documents with multiple people
+                    </label>
+                </div>
+
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="PrintingForEditing" value="Word Track Changes">
+                        <a href="https://www.youtube.com/watch?v=FVG2au1kuCs" target="_blank">
+                            Using Track Changes to edit and comment on Word documents
+                        </a>
+                    </label>
+                </div>
+
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="PrintingForEditing" value="Only Necessary Pages">
+                        Printing only the pages/sections that you need to edit (
+                            <a href="http://tv.adobe.com/watch/learn-acrobat-x/printing-range-of-pages-or-portion/" target="_blank">PDF</a>
+                        ) and are absolutely necessary to complete your assignment
+                    </label>
+                </div>
+
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="PrintingForEditing" value="Projecting Document">
+                        Projecting documents during meetings to facilitate group editing (in rooms equipped for projection)
+                    </label>
+                </div>
+
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="PrintingForEditing" value="Double-sided">
+                        Ensuring documents are double-sided
+                    </label>
+                </div>
+
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="PrintingForEditing" value="Laptop Monitor">
+                        Using my laptop monitor as a secondary monitor to assist with editing
+                    </label>
+                </div>
+
+                @Html.ValidationMessageFor(model => model.PrintingForEditing)
+            </div>
+        </div>
+
+        <div class="form-group">
+
+            <label class="col-md-12" for="InternetPrinting">
+                I will Reduce Internet Printing by: (check one or more)
+            </label>
+
+            <div class="col-md-11 col-md-offset-1">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="InternetPrinting" value="Save as PDF">
+                        Using the “Save As” option for webpages or webpage content and filing the PDF in the appropriate electronic file
+                    </label>
+                </div>
+
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="InternetPrinting" value="Personal Printing">
+                        Minimizing at-work de minimus personal printing
+                    </label>
+                </div>
+
+                @Html.ValidationMessageFor(model => model.InternetPrinting)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-12" for="PrintingLargeDocuments">
+                I will Reduce Printing Large Documents by: (check one or more)
+            </label>
+
+            <div class="col-md-11 col-md-offset-1">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="PrintingLargeDocuments" value="Save as PDF">
+                        Saving documents  as a PDF and filing in the appropriate electronic file
+                    </label>
+                </div>
+
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="PrintingLargeDocuments" value="Only needed pages">
+                        Printing only the pages/sections that are absolutely needed to complete your work assignment
+                    </label>
+                </div>
+
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="PrintingLargeDocuments" value="Multiple pages on one sheet">
+                        Printing multiple pages on a sheet, such as 2 pages per side or 4 pages per sheet (
+                            <a href="https://www.youtube.com/watch?v=DugeMQpJovM" target="_blank">Word</a>,
+                            <a href="https://www.youtube.com/watch?v=W8JwvJgjjSA" target="_blank">PDF</a>,
+                            <a href="https://www.youtube.com/watch?v=92Q0coc_968" target="_blank">Excel</a>
+                    )
+                    </label>
+                </div>
+
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="PrintingLargeDocuments" value="Only Final Copies">
+                        Printing  only final copies (as a matter of record)
+                    </label>
+                </div>
+
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="PrintingLargeDocuments" value="Double-sided">
+                        Ensuring the documents are printed double-sided
+                    </label>
+                </div>
+
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="PrintingLargeDocuments" value="Needed Reference Sections">
+                        Printing only the reference sections that I need for my particular job
+                    </label>
+                </div>
+                @Html.ValidationMessageFor(model => model.PrintingLargeDocuments)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-12" for="EncourageOthers">
+                To Further Reduce the Impacts (Environmental and Costs) of My Printing:
+            </label>
+
+            <div class="col-md-11 col-md-offset-1">
+                <div class="checkbox">
+                        <label>
+                            @Html.EditorFor(model => model.EncourageOthers)
+                            I will Encourage Others to Think about their Printing        
+                        </label>
+                </div>
+
+                @Html.ValidationMessageFor(model => model.EncourageOthers)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-12" for="ReduceColorPrinting">
+                I will Reduce Color Printing by: (check one or more)
+            </label>
+
+            <div class="col-md-11 col-md-offset-1">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="ReduceColorPrinting" value="Graph Patterns">
+                        Creating graphs and tables that use patterns instead of colors (
+                            <a href="https://www.youtube.com/watch?v=NW99ORK477E" target="_blank">Excel</a>,
+                            <a href="http://www.ehow.com/video_12245483_make-colorful-ppt-presentation-black-white.html" target="_blank">PowerPoint</a>
+                        )
+                    </label>
+                </div>
+
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="ReduceColorPrinting" value="Needed for Interpretation">
+                        Selecting color printing for graphs and tables only if it is necessary for interpretation
+                    </label>
+                </div>
+
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="ReduceColorPrinting" value="Final Production">
+                        Printing color only when needed for final production
+                    </label>
+                </div>
+
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="ReduceColorPrinting" value="Gray Scale">
+                        Ensuring that documents are printed in gray scale
+                    </label>
+                </div>
+
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="ReduceColorPrinting" value="No Cover Page">
+                        Not printing color cover pages of reference documents and reports
+                    </label>
+                </div>
+
+
+                @Html.ValidationMessageFor(model => model.ReduceColorPrinting)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-1 col-md-11">
+                <input type="submit" value="Submit" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}

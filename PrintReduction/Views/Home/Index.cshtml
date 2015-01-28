@@ -1,0 +1,10 @@
+﻿@model PrintReduction.Data.Template
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>@Html.DisplayFor(model => model.Subject)</h2>
+
+<div>
+            @Html.Raw(Model.Body)
+</div>

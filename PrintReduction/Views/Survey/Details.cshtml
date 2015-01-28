@@ -1,0 +1,80 @@
+﻿@model PrintReduction.Data.Survey
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="row" >
+    <div class="col-md-6">
+        <h4>pledge taken @Model.Updated.ToString("d")</h4>
+
+        @if(Model.ShareNumber || ViewBag.IsMySurvey)
+        {
+            <div>
+                My monthly average printing is @Html.DisplayFor(model => model.MonthlyAverage) pages.
+            </div>
+                  
+        }
+
+
+            <div>
+                I will reduce my monthly printing by @Html.DisplayFor(model => model.Percentage) %
+            </div>
+
+            <div>
+                @Html.DisplayFor(model => model.StopPrintingOutlookCalendars)
+                    <label>I will stop printing outlook calendars</label>
+            </div>
+
+            <div>
+                @Html.DisplayFor(model => model.EncourageOthers)
+                <label>I will encourage others to reduce their printing</label>
+                <div id="inviteList"></div>
+            </div>
+
+
+    </div>
+    <div class="col-md-6" id="reportTotalsChartDiv" style='height: 200px;'></div>
+</div>
+
+<div id="questionAndAnswers"></div>
+
+<div>
+    <a href="http://r2notes3.r02.epa.gov/intranet/iopm-famb.nsf/0/2108E3F3F07E321085257CEE00712A31" target="_blank">Take me to the pledge intranet website so that I can view all instructional videos</a>
+</div>
+
+<p>
+
+    <a href="@Url.Action("Display", "Template", new { id = "Print_Button" })" class="btn btn-primary">
+            <span class="glyphicon glyphicon-print"></span> 
+            Print
+    </a>
+
+    @if (ViewBag.isAdmin)
+    {   
+        Html.RenderPartial("~/Views/Shared/_LogHistory.cshtml");
+        Html.RenderPartial("~/Views/Shared/_Delete.cshtml");
+    }
+
+    @if (ViewBag.isMySurvey)
+    {
+        Html.RenderPartial("~/Views/Survey/_SharingOptions.cshtml");
+    }
+
+    @Html.ActionLink("Back to List", "Index")
+
+</p>
+
+
+@section Scripts {
+    <script type="text/javascript">
+        require(["printReduction/surveyControllerClass", "dojo/domReady!"], function (SurveyController) {
+            var surveyController = new SurveyController();
+
+            var id = "@Html.DisplayFor(model => model.Id)";
+
+            surveyController.read("questionAndAnswers", id, "@ViewBag.IsMySurvey" == "True");
+
+        });
+    </script>
+}

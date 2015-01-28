@@ -1,0 +1,34 @@
+﻿<button class="btn btn-primary" data-toggle="modal" data-target="#logHistoryModal">
+    <span class="glyphicon glyphicon-list-alt"></span>
+    History
+</button>
+
+<!-- Modal for displaying log -->
+<div class="modal fade" id="logHistoryModal" tabindex="-1" role="dialog" aria-labelledby="logHistoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="logHistoryModalLabel">History</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <div id="logGrid"></div>
+                </div>
+            </div>
+
+            <div id="logHistoryModalErrors"></div>
+
+            <div class="modal-footer">
+                <a href="@Url.Action("CSV", "Log", new { id = Model.Id })" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-th-list"></span> 
+                    Excel
+                </a>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

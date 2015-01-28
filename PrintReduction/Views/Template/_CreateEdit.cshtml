@@ -1,0 +1,83 @@
+﻿@model PrintReduction.Data.Template
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Template</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Key, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Key, new { @class="form-control"})
+                @Html.ValidationMessageFor(model => model.Key)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Description, new { @class="form-control"})
+                @Html.ValidationMessageFor(model => model.Description)
+            </div>
+        </div>
+
+        <div class="form-group">
+           <label class="control-label col-md-2">From</label>
+           <div class="col-md-10">
+                <dl>
+                    <dt>Display Name</dt>
+                    <dd>
+                        @Html.EditorFor(model => model.From.DisplayName)
+                        @Html.ValidationMessageFor(model => model.From.DisplayName)
+                    </dd>
+
+                    <dt>Email Address</dt>
+                    <dd>
+                        @Html.EditorFor(model => model.From.Address)
+                        @Html.ValidationMessageFor(model => model.From.Address)
+                    </dd>
+                </dl>
+                
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Priority, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Priority)
+                @Html.ValidationMessageFor(model => model.Priority)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Subject, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Subject, new { @class="form-control"})
+                @Html.ValidationMessageFor(model => model.Subject)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Body, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Body)
+                @Html.ValidationMessageFor(model => model.Body)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Submit" class="btn btn-default" />
+            </div>
+        </div>
+
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

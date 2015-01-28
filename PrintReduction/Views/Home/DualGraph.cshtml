@@ -1,0 +1,61 @@
+﻿@model PrintReduction.Data.Template
+
+@{
+    ViewBag.Title = "Graph";
+}
+
+<h2>@Html.DisplayFor(model => model.Subject)</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <div id="reportTotalsChartDiv_1" style='display:block; clear:none; z-index:999; width:100%; height:499px;'>
+            <img src="https://manage.liquidweb.com/img/icons/loading-large.gif" />
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div id="reportTotalsChartDiv_2" style='display:block; clear:none; z-index:999; width:100%; height:499px;'>
+            <img src="https://manage.liquidweb.com/img/icons/loading-large.gif" />
+        </div>
+    </div>
+</div>
+
+<div>
+            @Html.Raw(Model.Body)
+</div>
+
+@section Scripts { 
+    <script type="text/javascript">
+        //Right equivalent
+        function strRight(sourceStr, keyStr) {
+            idx = sourceStr.indexOf(keyStr);
+            return (idx == -1 | keyStr == '') ? '' : sourceStr.substr(idx + keyStr.length);
+        }
+
+        //RightBack equivalent
+        function rightBack(sourceStr, keyStr) {
+            arr = sourceStr.split(keyStr);
+            return (sourceStr.indexOf(keyStr) == -1 | keyStr == '') ? '' : arr.pop();
+        }
+
+        //Left equivalent
+        function strLeft(sourceStr, keyStr) {
+            return (sourceStr.indexOf(keyStr) == -1 | keyStr == '') ? '' : sourceStr.split(keyStr)[0];
+        }
+
+        require(["printReduction/graphingControllerClass", "dojo/domReady!"], function (graphController) {
+
+            graphing = new graphController();
+            //graphing.addGraphingNavigator();
+
+            //Graphs - going to get type from url, and we are going to do dual graphs (average and total)
+            //Location
+            //Division
+            //CO2_Division
+            
+            var dualGraphName = rightBack(location.pathname, "DualGraph/");
+            graphing.dualGraph_bar(dualGraphName, "reportTotalsChartDiv_1", "reportTotalsChartDiv_2");
+        });
+        
+    </script>
+}

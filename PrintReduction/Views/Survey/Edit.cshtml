@@ -1,0 +1,24 @@
+﻿@model PrintReduction.Data.Survey
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@RenderPage("~/Views/Survey/_CreateEdit.cshtml")
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+
+@section Scripts {
+    <script type="text/javascript">
+        require(["printReduction/surveyControllerClass", "dojo/domReady!"], function (SurveyController) {
+            var surveyController = new SurveyController();
+
+            surveyController.edit();
+
+        });
+    </script>
+}
